@@ -239,7 +239,7 @@ class WanDiffusionWrapper(torch.nn.Module):
         # X0 prediction
         if kv_cache is not None:
             flow_pred = self.model(
-                noisy_image_or_video.permute(0, 2, 1, 3, 4),
+                noisy_image_or_video.permute(0, 2, 1, 3, 4), # [B, C, T, H, W]
                 t=input_timestep, context=prompt_embeds,
                 seq_len=self.seq_len,
                 kv_cache=kv_cache,

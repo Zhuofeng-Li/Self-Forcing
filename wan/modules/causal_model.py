@@ -764,7 +764,7 @@ class CausalWanModel(ModelMixin, ConfigMixin):
         x = [u.flatten(2).transpose(1, 2) for u in x]
         seq_lens = torch.tensor([u.size(1) for u in x], dtype=torch.long)
         assert seq_lens.max() <= seq_len
-        x = torch.cat(x)
+        x = torch.cat(x) 
         """
         torch.cat([
             torch.cat([u, u.new_zeros(1, seq_len - u.size(1), u.size(2))],
@@ -775,9 +775,9 @@ class CausalWanModel(ModelMixin, ConfigMixin):
         # time embeddings
         # with amp.autocast(dtype=torch.float32):
         e = self.time_embedding(
-            sinusoidal_embedding_1d(self.freq_dim, t.flatten()).type_as(x))
+            sinusoidal_embedding_1d(self.freq_dim, t.flatten()).type_as(x)) # (3, 1536)
         e0 = self.time_projection(e).unflatten(
-            1, (6, self.dim)).unflatten(dim=0, sizes=t.shape)
+            1, (6, self.dim)).unflatten(dim=0, sizes=t.shape) # (3, 6, 1536)
         # assert e.dtype == torch.float32 and e0.dtype == torch.float32
 
         # context
@@ -787,7 +787,7 @@ class CausalWanModel(ModelMixin, ConfigMixin):
                 torch.cat(
                     [u, u.new_zeros(self.text_len - u.size(0), u.size(1))])
                 for u in context
-            ]))
+            ])) # (1, 512, 1536)
 
         if clip_fea is not None:
             context_clip = self.img_emb(clip_fea)  # bs x 257 x dim
@@ -795,7 +795,7 @@ class CausalWanModel(ModelMixin, ConfigMixin):
 
         # arguments
         kwargs = dict(
-            e=e0,
+            e=e0, # (3, 6, 1536)
             seq_lens=seq_lens,
             grid_sizes=grid_sizes,
             freqs=self.freqs,

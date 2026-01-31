@@ -1,0 +1,19 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+	  {
+		"name": "Debug demo_debug.py",
+		"type": "debugpy",
+		"request": "launch",
+		"program": "/home/ubuntu/jianwen-us-midwest-1/panlu/zhuofeng-tamu/Self-Forcing/demo_debug.py",
+		"python": "/home/ubuntu/jianwen-us-midwest-1/panlu/zhuofeng-tamu/Self-Forcing/.venv/bin/python",
+		"cwd": "/home/ubuntu/jianwen-us-midwest-1/panlu/zhuofeng-tamu/Self-Forcing",
+		"console": "integratedTerminal",
+		"env": {
+			"CUDA_VISIBLE_DEVICES": "7",
+		  }
+	  }
+	],
+
+  }
+  

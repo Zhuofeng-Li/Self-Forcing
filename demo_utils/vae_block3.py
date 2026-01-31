@@ -146,12 +146,12 @@ class VAEDecoderWrapper(nn.Module):
 
     def forward(
             self,
-            z: torch.Tensor,
+            z: torch.Tensor, # (b, c, t, h, w)
             *feat_cache: List[torch.Tensor]
     ):
         # from [batch_size, num_frames, num_channels, height, width]
         # to [batch_size, num_channels, num_frames, height, width]
-        z = z.permute(0, 2, 1, 3, 4)
+        z = z.permute(0, 2, 1, 3, 4) # (b, t, c, h, w)
         feat_cache = list(feat_cache)
         print("Length of feat_cache: ", len(feat_cache))
 
@@ -241,7 +241,7 @@ class VAEDecoder3d(nn.Module):
 
     def forward(
             self,
-            x: torch.Tensor,
+            x: torch.Tensor, # (b, c, t, h, w)
             feat_cache: List[torch.Tensor]
     ):
         feat_idx = [0]
